@@ -25,7 +25,21 @@ let getTopDoctorHome = (limitInput) => {
             as: "genderData",
             attributes: ["ValueEn", "ValueVi"],
           },
+          {
+            model: db.Doctor_Infor,
+            attributes: ["specialtyId"],
+            include: [
+              {
+                model: db.Specialty,
+                as: "detailSpecialty",
+                attributes: {
+                  exclude: ["contentHTML", "contentMarkdown", "image", "id"],
+                },
+              },
+            ],
+          },
         ],
+        order: [["updatedAt", "ASC"]],
         raw: true,
         nest: true,
       });
